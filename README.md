@@ -1,70 +1,78 @@
-# Getting Started with Create React App
+# Zebra Design System React Components
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Install
 
-## Available Scripts
+```bash
+  npm i @zebra-fed/zds-react
+```
 
-In the project directory, you can run:
+## Peer Dependencies
 
-### `npm start`
+-`React`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Usage
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+This library is build with theme in mind. To use the library, the entire react application must be wrapped in `<StripesTheme>`
 
-### `npm test`
+```js
+import { StripesTheme } from "@zebra-fed/zds-react";
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+<StripesTheme>
+  <App />
+</StripesTheme>;
+```
 
-### `npm run build`
+Importing components:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```js
+import { Button, Avatar, Pagination, Table } from "@zebra-fed/zds-react";
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Importing and using Interfaces with Components
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```js
+import { Button, ButtonType, SizeType } from "@zebra-fed/zds-react";
 
-### `npm run eject`
+return (
+  <Button type={ButtonType.Basic} size={SizeType.Large}>
+    Button
+  </Button>
+);
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+# Building a SVG Library for your Application
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+NOTE: By default the icons property below is being set to our default icon library. However, if you wish to override said library with your own icon library then please follow the following steps. However, it would be highly recommended to reach out to marc.adlington1@zebra.com before moving on to the next step.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+The `<SVGIcon />` component requires the configuration of a iconLibrary passed through to the Stripes theme for it to pick up the symbols. This is configured like such:
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+```javascript
+import { icons } from "../resources/iconLibrary";
+const themeObj = {
+  icons: icons,
+};
 
-## Learn More
+<StripesTheme mode={"dark"} theme={themeObj}>
+  // body of your app
+</StripesTheme>;
+```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+The Stripes project exposes a script that will take a folder of SVG icons, iconography that is specific to your application, and compiles it into a single iconLibrary string that will be ingested into the Stripes theming engine.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+The filename of the svg files will be used as the iconid property when referencing the icon in the `<SVGIcon />` tag within your app.
 
-### Code Splitting
+The script can be access via:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+```bash
+npm run buildIcons --folder ./resources/default
+```
 
-### Analyzing the Bundle Size
+the argument that follows the --folder string will be the source folder for your svg files. It will recursively search through the folder and compile all svg objects into a single string.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+## Development
 
-### Making a Progressive Web App
+You can easily develop and interact with your components. To run the local server, simply run:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+```bash
+$ yarn start
+```
